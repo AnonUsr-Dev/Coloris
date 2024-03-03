@@ -837,10 +837,9 @@
         b: match[5] * 1,
         a: match[6] * 1
       };
-
       // Workaround to mitigate a Chromium bug where the alpha value is rounded incorrectly
-      rgba.a = +rgba.a.toFixed(2);
-
+      // Keep internal values ​​and rounding procedure move to RGBAToStr, HSLAToStr
+      // rgba.a = +rgba.a.toFixed(2);
     } else {
       match = ctx.fillStyle.replace('#', '').match(/.{2}/g).map(h => parseInt(h, 16));
       rgba = {
@@ -898,7 +897,7 @@
     if (!settings.alpha || (rgba.a === 1 && !settings.forceAlpha)) {
       return `rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`;
     } else {
-      return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+      return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a.toFixed(2)})`;
     }
   }
 
@@ -911,7 +910,7 @@
     if (!settings.alpha || (hsla.a === 1 && !settings.forceAlpha)) {
       return `hsl(${hsla.h}, ${hsla.s}%, ${hsla.l}%)`;
     } else {
-      return `hsla(${hsla.h}, ${hsla.s}%, ${hsla.l}%, ${hsla.a})`;
+      return `hsla(${hsla.h}, ${hsla.s}%, ${hsla.l}%, ${hsla.a.toFixed(2)})`;
     }
   }
 
